@@ -2977,11 +2977,12 @@ AS
 BEGIN
     BEGIN TRY
             BEGIN
+			RETURN(
 				 SELECT 
                     SUM(A.PLUS_MINUS * A.PTS / (A.MINS/A.GP) )
                  FROM allPlayers as A
                  WHERE A.Player_key in
-                    (SELECT p.Player_key FROM PlayerSelection p WHERE p.TeamName = @teamName AND p.Id = @UserID)
+                    (SELECT p.Player_key FROM PlayerSelection p WHERE p.TeamName = @teamName AND p.Id = @UserID))
             END
     END TRY
      BEGIN CATCH
@@ -3083,12 +3084,6 @@ END;
 
 GO
 
-
-
-GO;
-
-
-GO;
 CREATE PROCEDURE [dbo].[DtrScoresSearch]
 @UserId NVARCHAR(450), @filter NVARCHAR(50)
 
