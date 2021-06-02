@@ -9,7 +9,7 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
---use [NBA_Version2]
+use [NBA_Version2]
 drop table if exists PlayerSelection;
 drop table if exists Team;
 drop table if exists Player;
@@ -2968,11 +2968,7 @@ drop procedure if exists DtrScore;
 drop procedure if EXISTS DtrScores;
 drop procedure if EXISTS DtrScoresSearch;
 drop procedure if EXISTS DtrScoresFav;
-
-
 GO
-
-
 CREATE PROCEDURE [dbo].[DtrScore]
 @UserID NVARCHAR(450), @TeamName nvarchar(50)
 
@@ -2980,12 +2976,12 @@ AS
 
 BEGIN
     BEGIN TRY
-            BEGIN				 
-                    RETURN (SELECT 
+            BEGIN
+				 SELECT 
                     SUM(A.PLUS_MINUS * A.PTS / (A.MINS/A.GP) )
                  FROM allPlayers as A
                  WHERE A.Player_key in
-                    (SELECT p.Player_key FROM PlayerSelection p WHERE p.TeamName = @teamName AND p.Id = @userID))
+                    (SELECT p.Player_key FROM PlayerSelection p WHERE p.TeamName = @teamName AND p.Id = @UserID)
             END
     END TRY
      BEGIN CATCH
@@ -3006,6 +3002,10 @@ BEGIN
 END;
 
 GO
+EXEC DtrScore @UserID='aabe87eb-9e11-45b2-acbd-6ac8b7311ed6',@TeamName='team1';
+GO
+
+
 
 
 
@@ -3084,6 +3084,11 @@ END;
 GO
 
 
+
+GO;
+
+
+GO;
 CREATE PROCEDURE [dbo].[DtrScoresSearch]
 @UserId NVARCHAR(450), @filter NVARCHAR(50)
 
